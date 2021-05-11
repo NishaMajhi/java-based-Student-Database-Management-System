@@ -1,0 +1,120 @@
+package studentDatabaseApp;
+
+import java.util.Scanner;
+
+class Student{
+	private String firstName;
+	private String lastName;
+	private int grade;
+	private static int id = 1000;
+	private String studentId;
+	private String courses;
+	private int tuitionBalance = 0;
+	private static int costOfCourse = 4000;
+	
+	
+	// Constructor : for entering the data of Student
+		public Student(){
+		Scanner sc = new Scanner(System.in);
+	    System.out.print("\nEnter First Name of Student : ");
+	    firstName = sc.nextLine();
+	    
+	    System.out.print("Enter Last Name of Student : ");
+	    lastName = sc.nextLine();
+	    
+	    System.out.print("Enter the class of Student : ");
+	    grade = sc.nextInt();
+	    
+	    setStudentId();
+	  
+	}
+	
+	
+	// set student unique id
+		private void setStudentId()
+	{ 
+		studentId = grade + "" + id;
+		id++;
+	}
+	
+		
+	// enroll in courses
+		public void enroll()
+	{
+		do {
+		System.out.print("enter the course to enroll (Q for quit : ) ");
+		Scanner sc = new Scanner(System.in);
+		 String course = sc.nextLine();
+		 if(!course.equals("Q")) 
+		 {
+		     courses = courses + "\n " + course;
+		     tuitionBalance += costOfCourse;
+		  }
+		 else
+		 {
+			 break;
+		 }
+		}while(1!=0);
+	 
+     }
+		
+	
+	//view balance
+		public void viewBalance()
+	{
+		System.out.println("your balance is : " + tuitionBalance + " rupees");
+	}
+	
+	
+	//pay tuition fees	
+	public void payTuitionFees(int money)
+	{
+		tuitionBalance -= money;
+		System.out.println("thanks for your payment rs " + money);
+		viewBalance();
+	}
+	
+	
+	//print all information
+	public void showStatus()
+	{
+		System.out.print("\nStudent Name : " + firstName+" "+lastName + 
+				"\nStudent ID : " + studentId + 
+				"\nCourses Enrolled : " + courses+
+				"\nBalance : " + tuitionBalance +"\n");
+	}
+}
+
+public class StudentDatabase {
+
+	public static void main(String[] args) {
+		
+		Scanner sc1 = new Scanner (System.in);
+		
+		//Ask how many new Student want to enroll
+		System.out.print("enter number of Students to enroll : ");
+		int numOfStudent = sc1.nextInt();
+		Student[] student= new Student[numOfStudent];
+		
+		
+		//Create n number of students
+		int i;
+        for(i = 0;i < numOfStudent;i++)
+         {
+    	   student[i] = new Student();
+    	   student[i].enroll();
+    	   student[i].viewBalance();
+   		   System.out.print("enter the money that want to pay : ");
+   		   int payment = sc1.nextInt();
+   		   student[i].payTuitionFees(payment);
+    	   
+          }
+        
+        for( i=0;i<numOfStudent;i++)
+        {
+        	student[i].showStatus();
+    		   System.out.println();
+        }
+	}
+	
+}
